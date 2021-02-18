@@ -39,3 +39,18 @@ SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length)
     }
     this->messageBuffer = new char[this->size];
 }
+
+template <typename t, const char *type>
+BasicSensorValueTemplate<t, type>::BasicSensorValueTemplate(String name)
+{
+    this->type = String(type);
+    this->size = sizeof(t);
+    this->messageBuffer = new char[this->size];
+    this->name = name;
+}
+
+template <typename t, const char *type>
+char *BasicSensorValueTemplate<t, type>::getMessage()
+{
+    return reinterpret_cast<char *>(&(this->value));
+}

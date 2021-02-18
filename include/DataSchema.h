@@ -38,4 +38,24 @@ class MessageTemplate
     MessageTemplate(SensorValue *value, uint8_t id);
     void send(Stream *medium);
 };
+
+template <typename t, const char *type>
+struct BasicSensorValueTemplate : public BasicSensorValue
+{
+    t value;
+    char *messageBuffer;
+
+public:
+    BasicSensorValueTemplate(String name);
+    char *getMessage();
+};
+
+extern const char intText[] = "int";
+typedef BasicSensorValueTemplate<int, intText> IntSensorValue;
+
+extern const char floatText[] = "float";
+typedef BasicSensorValueTemplate<float, floatText> IntSensorValue;
+
+extern const char stringText[] = "String";
+typedef BasicSensorValueTemplate<String, stringText> IntSensorValue;
 #endif
