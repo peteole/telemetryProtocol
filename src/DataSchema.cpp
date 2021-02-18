@@ -54,3 +54,25 @@ char *BasicSensorValueTemplate<t, type>::getMessage()
 {
     return reinterpret_cast<char *>(&(this->value));
 }
+
+void MessageTemplate::send(Stream *medium)
+{
+    //mark start of message
+    medium->write("\0");
+    medium->write(1);
+
+    char *message = this->value->getMessage();
+    for (int i = 0; i < this->value->size; i++)
+    {
+        if (message[i] == '\0')
+        {
+            //mark this is a normal zero
+            medium->write("\0");
+        }
+        medium->write(message[i]);
+    }
+
+    //mark end of message
+    medium->write("\0");
+    medium->write(2);
+}
