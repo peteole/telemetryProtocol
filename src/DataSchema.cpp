@@ -55,7 +55,7 @@ char *BasicSensorValueTemplate<t, type>::getMessage()
     return reinterpret_cast<char *>(&(this->value));
 }
 
-void MessageTemplate::send(Stream *medium)
+void Message::send(Stream *medium)
 {
     //mark start of message
     medium->write("\0");
@@ -75,4 +75,8 @@ void MessageTemplate::send(Stream *medium)
     //mark end of message
     medium->write("\0");
     medium->write(2);
+}
+Message::Message(SensorValue *value, uint8_t id){
+    this->value=value;
+    this->id=id;
 }

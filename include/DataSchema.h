@@ -30,12 +30,13 @@ public:
 };
 
 // A message type which allows setting sensor values and converting them to a sendable format
-class MessageTemplate
+class Message
 {
+public:
     // uinique ID for this kind of message. Is sent at the beginning of each message.
     uint8_t id;
     SensorValue *value;
-    MessageTemplate(SensorValue *value, uint8_t id);
+    Message(SensorValue *value, uint8_t id);
     void send(Stream *medium);
 };
 
@@ -54,8 +55,8 @@ extern const char intText[] = "int";
 typedef BasicSensorValueTemplate<int, intText> IntSensorValue;
 
 extern const char floatText[] = "float";
-typedef BasicSensorValueTemplate<float, floatText> IntSensorValue;
+typedef BasicSensorValueTemplate<float, floatText> FloatSensorValue;
 
 extern const char stringText[] = "String";
-typedef BasicSensorValueTemplate<String, stringText> IntSensorValue;
+typedef BasicSensorValueTemplate<String, stringText> StringSensorValue;
 #endif
