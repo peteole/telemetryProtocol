@@ -40,23 +40,42 @@ public:
     void send(Stream *medium);
 };
 
-template <typename t, const char *type>
+template <typename t>
 struct BasicSensorValueTemplate : public BasicSensorValue
 {
+public:
     t value;
     char *messageBuffer;
 
-public:
-    BasicSensorValueTemplate(String name);
-    char *getMessage();
+    BasicSensorValueTemplate(String type, String name)
+    {
+        this->type = type;
+        this->size = sizeof(t);
+        this->messageBuffer = new char[this->size];
+        this->name = name;
+    }
+    char *getMessage()
+    {
+        return reinterpret_cast<char *>(&(this->value));
+    }
 };
 
-extern const char intText[] = "int";
-typedef BasicSensorValueTemplate<int, intText> IntSensorValue;
+class IntSensorValue : public BasicSensorValueTemplate<int>
+{
+public:
+    IntSensorValue(String name) : BasicSensorValueTemplate("int", name) {}
+};
 
-extern const char floatText[] = "float";
-typedef BasicSensorValueTemplate<float, floatText> FloatSensorValue;
+class FloatSensorValue : public BasicSensorValueTemplate<float>
+{
+public:
+    FloatSensorValue(String name) : BasicSensorValueTemplate("float", name) {}
+};
 
-extern const char stringText[] = "String";
-typedef BasicSensorValueTemplate<String, stringText> StringSensorValue;
+class StringSensorValue : public BasicSensorValueTemplate<String>
+{
+public:
+    StringSensorValue(String name) : BasicSensorValueTemplate("string", name) {}
+};
+
 #endif

@@ -17,5 +17,5 @@ void loop()
     altitude.value++;
     heading.value++;
     heading.value %= 360;
-    message.send(Serial);
+    message.send(&Serial);
 }
