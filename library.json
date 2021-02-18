@@ -1,10 +1,10 @@
 {
-    "name": "GenericDMP",
-    "keywords": "dmp, artificial horizon, digital motion procession, gyro, accelerometer, MPU6050, GY-91",
-    "description": "Generic arduino library for digital motion procession (for artificial horizons etc). Does only include the logic for processing sensor reading, you will need to provide the methods for reading the sensors yourself (see examples).",
+    "name": "TelemetryProtocol",
+    "keywords": "telemetry, protocol, serial, transmission",
+    "description": "A protocol for transmitting sensor data in a very efficient way",
     "repository": {
         "type": "git",
-        "url": "https://github.com/peteole/dmp.git"
+        "url": "https://github.com/peteole/telemetryProtocol.git"
     },
     "authors": [
         {
