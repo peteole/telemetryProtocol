@@ -22,11 +22,11 @@ private:
     char *messageBuffer;
 
 public:
-    SensorValue *sensorvalues;
+    SensorValue **sensorvalues;
     uint16_t length;
     String toJSON() override;
     char *getMessage() override;
-    SensorValueList(SensorValue *sensorvalues, uint16_t length);
+    SensorValueList(SensorValue **sensorvalues, uint16_t length);
 };
 
 // A message type which allows setting sensor values and converting them to a sendable format
