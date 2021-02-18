@@ -9,6 +9,7 @@ Message message(&package, 17);
 void setup()
 {
     Serial.begin(9600);
+    Serial.write(message.value->toJSON());
 }
 
 void loop()
