@@ -13,6 +13,7 @@ void MessageRegistry::readDataInStream(Stream *toRead)
         {
             if (nextValue == 0)
             {
+                //zero occured in message
                 this->buffer[currentPosition] = nextValue;
                 currentPosition++;
             }
@@ -36,6 +37,19 @@ void MessageRegistry::readDataInStream(Stream *toRead)
                         break;
                     }
                 }
+            }
+            previousByteZero = false;
+        }
+        else
+        {
+            if (nextValue == 0)
+            {
+                previousByteZero = true;
+            }
+            else
+            {
+                this->buffer[this->currentPosition] = nextValue;
+                this->currentPosition++;
             }
         }
     }

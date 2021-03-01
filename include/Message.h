@@ -11,7 +11,7 @@ public:
     // id must be >1
     Message(SensorValue *value, uint8_t id);
     void send(Stream *medium);
-    //parses the message and return if ti was successful
+    //parses the message and return if it was successful
     bool parse(char *toParse);
 };
 #endif
