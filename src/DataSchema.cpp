@@ -17,6 +17,16 @@ char *SensorValueList::getMessage()
     }
     return this->messageBuffer;
 }
+
+void SensorValueList::parse(char *data)
+{
+    uint16_t position = 0;
+    for (int i = 0; i < this->length; i++)
+    {
+        this->sensorvalues[i]->parse(data + position);
+        position += this->sensorvalues[i]->size;
+    }
+}
 String SensorValueList::toJSON()
 {
     String JSON = "{name:" + this->name + ", size: " + this->size + ", values:[\n";
@@ -55,28 +65,3 @@ SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length)
 //     return reinterpret_cast<char *>(&(this->value));
 // }
 
-void Message::send(Stream *medium)
-{
-    //mark start of message
-    medium->write("\0");
-    medium->write(1);
-
-    char *message = this->value->getMessage();
-    for (int i = 0; i < this->value->size; i++)
-    {
-        if (message[i] == '\0')
-        {
-            //mark this is a normal zero
-            medium->write("\0");
-        }
-        medium->write(message[i]);
-    }
-
-    //mark end of message
-    medium->write("\0");
-    medium->write(2);
-}
-Message::Message(SensorValue *value, uint8_t id){
-    this->value=value;
-    this->id=id;
-}

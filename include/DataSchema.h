@@ -9,6 +9,7 @@ struct SensorValue
 public:
     virtual String toJSON() = 0;
     virtual char *getMessage() = 0;
+    virtual void parse(char *message) = 0;
 };
 struct BasicSensorValue : public SensorValue
 {
@@ -26,19 +27,11 @@ public:
     uint16_t length;
     String toJSON() override;
     char *getMessage() override;
+    void parse(char *message) override;
     SensorValueList(SensorValue **sensorvalues, uint16_t length);
 };
 
-// A message type which allows setting sensor values and converting them to a sendable format
-class Message
-{
-public:
-    // uinique ID for this kind of message. Is sent at the beginning of each message.
-    uint8_t id;
-    SensorValue *value;
-    Message(SensorValue *value, uint8_t id);
-    void send(Stream *medium);
-};
+
 
 template <typename t>
 struct BasicSensorValueTemplate : public BasicSensorValue
@@ -57,6 +50,11 @@ public:
     char *getMessage()
     {
         return reinterpret_cast<char *>(&(this->value));
+    }
+
+    void parse(char *message) override
+    {
+        this->value = *reinterpret_cast<t *>(message);
     }
 };
 
