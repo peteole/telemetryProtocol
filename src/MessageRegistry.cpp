@@ -71,3 +71,8 @@ void MessageRegistry::addMessage(Message *toAdd)
     this->buffer = new char[this->maxMessageLength];
     this->currentPosition = 0;
 }
+void MessageRegistry::sendDataSchema(Stream* stream){
+    for(int i=0;i<this->length;i++){
+        this->messages[i]->sendDescription(stream);
+    }
+}

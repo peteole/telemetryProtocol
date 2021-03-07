@@ -1,15 +1,18 @@
 #include "DataSchema.h"
+#include "Message.h"
+#include "MessageRegistry.h"
 #include <Arduino.h>
 FloatSensorValue altitude("altitude");
 IntSensorValue heading("heading");
 SensorValue *list[] = {&altitude, &heading};
 SensorValueList package(list, 2);
 Message message(&package, 17);
-
+MessageRegistry registry;
 void setup()
 {
     Serial.begin(9600);
-    Serial.write(message.value->toJSON());
+    registry.addMessage(&message);
+    registry.sendDataSchema(&Serial);
 }
 
 void loop()

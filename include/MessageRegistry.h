@@ -7,12 +7,12 @@ class MessageRegistry
 public:
     void addMessage(Message *toAdd);
     void readDataInStream(Stream *stream);
-
+    void sendDataSchema(Stream* stream);
 private:
     Message *currentMessage = NULL;
     Message **messages;
     int length = 0;
-    char *buffer;
+    char *buffer=NULL;
     int maxMessageLength = 0;
     uint16_t currentPosition;
     bool previousByteZero = false;

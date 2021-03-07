@@ -4,7 +4,7 @@ void Message::send(Stream *medium)
 {
     //mark start of message
     medium->write("\0");
-    medium->write(1);
+    medium->write(this->id);
 
     char *message = this->value->getMessage();
     for (int i = 0; i < this->value->size; i++)
@@ -19,12 +19,12 @@ void Message::send(Stream *medium)
 
     //mark end of message
     medium->write("\0");
-    medium->write(2);
+    medium->write(1);
 }
 Message::Message(SensorValue *value, uint8_t id)
 {
     while(id<=1){
-        // id must be >1
+        // id must be >2
     }
     this->value = value;
     this->id = id;
@@ -39,4 +39,17 @@ bool Message::parse(char *toParse)
     }
     this->value->parse(toParse);
     return true;
+}
+void Message::sendDescription(Stream* medium){
+    //mark start of description
+    medium->write("\0");
+    medium->write(255);
+
+    // write id and description
+    medium->write(this->id);
+    medium->print(this->value->toJSON());
+    
+    //mark end of message
+    medium->write("\0");
+    medium->write(1);
 }

@@ -13,5 +13,6 @@ public:
     void send(Stream *medium);
     //parses the message and return if it was successful
     bool parse(char *toParse);
+    void sendDescription(Stream* medium);
 };
 #endif

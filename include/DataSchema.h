@@ -3,6 +3,7 @@
 #include "Arduino.h"
 struct SensorValue
 {
+    // This must be unique for this sensor value
     String name;
     uint16_t size;
 
