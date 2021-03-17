@@ -23,7 +23,8 @@ void Message::send(Stream *medium)
 }
 Message::Message(SensorValue *value, uint8_t id)
 {
-    while(id<=1){
+    while (id <= 1)
+    {
         // id must be >2
     }
     this->value = value;
@@ -40,15 +41,25 @@ bool Message::parse(char *toParse)
     this->value->parse(toParse);
     return true;
 }
-void Message::sendDescription(Stream* medium){
+void Message::sendDescription(Stream *medium)
+{
     //mark start of description
     medium->write("\0");
     medium->write(255);
 
     // write id and description
     medium->write(this->id);
-    medium->print(this->value->toJSON());
-    
+    String json = this->value->toJSON();
+    for (int i = 0; i < json.length(); i++)
+    {
+        char toPrint = json.charAt(i);
+        if (toPrint == '\0')
+        {
+            medium->write("\0");
+        }
+        medium->write(toPrint);
+    }
+
     //mark end of message
     medium->write("\0");
     medium->write(1);

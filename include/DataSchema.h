@@ -29,10 +29,8 @@ public:
     String toJSON() override;
     char *getMessage() override;
     void parse(char *message) override;
-    SensorValueList(SensorValue **sensorvalues, uint16_t length);
+    SensorValueList(SensorValue **sensorvalues, uint16_t length, String name = "list");
 };
-
-
 
 template <typename t>
 struct BasicSensorValueTemplate : public BasicSensorValue

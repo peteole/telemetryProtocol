@@ -1,7 +1,7 @@
 #include "DataSchema.h"
 String BasicSensorValue::toJSON()
 {
-    return "{name:" + this->name + ", size: " + this->size + ", type: " + this->type;
+    return "{\"name\": \"" + this->name + "\", \"size\": " + this->size + ", \"type\": \"" + this->type + "\"}";
 }
 char *SensorValueList::getMessage()
 {
@@ -29,7 +29,7 @@ void SensorValueList::parse(char *data)
 }
 String SensorValueList::toJSON()
 {
-    String JSON = "{name:" + this->name + ", size: " + this->size + ", values:[\n";
+    String JSON = "{\"name\": \"" + this->name + "\",\n \"size\": " + this->size + ", \"values\": [\n";
     for (int i = 0; i < this->length; i++)
     {
         JSON += this->sensorvalues[i]->toJSON() + ",\n";
@@ -38,8 +38,9 @@ String SensorValueList::toJSON()
     return JSON;
 }
 
-SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length)
+SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length, String name)
 {
+    this->name = name;
     this->sensorvalues = sensorvalues;
     this->length = length;
     this->size = 0;
@@ -64,4 +65,3 @@ SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length)
 // {
 //     return reinterpret_cast<char *>(&(this->value));
 // }
-
