@@ -65,14 +65,16 @@ void MessageRegistry::addMessage(Message *toAdd)
     newMessages[this->length - 1] = toAdd;
     delete this->messages;
     this->messages = newMessages;
-
-    this->maxMessageLength = max(this->maxMessageLength, toAdd->value->size);
+    if (this->maxMessageLength < toAdd->value->size)
+        this->maxMessageLength = toAdd->value->size;
     delete this->buffer;
     this->buffer = new char[this->maxMessageLength];
     this->currentPosition = 0;
 }
-void MessageRegistry::sendDataSchema(Stream* stream){
-    for(int i=0;i<this->length;i++){
+void MessageRegistry::sendDataSchema(Stream *stream)
+{
+    for (int i = 0; i < this->length; i++)
+    {
         this->messages[i]->sendDescription(stream);
     }
 }
