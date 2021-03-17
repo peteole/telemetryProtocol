@@ -32,7 +32,7 @@ String SensorValueList::toJSON()
     String JSON = "{\"name\": \"" + this->name + "\",\n \"size\": " + this->size + ", \"values\": [\n";
     for (int i = 0; i < this->length; i++)
     {
-        JSON += this->sensorvalues[i]->toJSON() + ",\n";
+        JSON += this->sensorvalues[i]->toJSON() + (i + 1 < this->length ? ",\n" : "\n");
     }
     JSON += "]\n}";
     return JSON;
