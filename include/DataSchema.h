@@ -1,4 +1,4 @@
-#ifndef DATSCHEMA_H
+#ifndef DATASCHEMA_H
 #define DATASCHEMA_H
 #include "Arduino.h"
 struct SensorValue
