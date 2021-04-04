@@ -10,7 +10,7 @@ MessageNode *getLatestMessageNode(MessageNode *start)
 StreamMessage::StreamMessage(int id) : Message(new StreamSensorValue(), id)
 {
     this->oldestInboundMessage = NULL;
-    this->oldestOutboundMessage=NULL;
+    this->oldestOutboundMessage = NULL;
 }
 
 void StreamMessage::addMessage(String message)
@@ -68,6 +68,28 @@ String StreamMessage::peek()
         return "";
     return getLatestMessageNode(this->oldestInboundMessage)->value;
 }
+String StreamMessage::readMessage()
+{
+    if (this->oldestInboundMessage == NULL)
+        return "";
+    if (this->oldestInboundMessage->next == NULL)
+    {
+        String toReturn = this->oldestInboundMessage->value;
+        delete this->oldestInboundMessage;
+        return toReturn;
+    }
+    MessageNode *last = this->oldestInboundMessage;
+    MessageNode *current = this->oldestInboundMessage->next;
+    while (current->next != NULL)
+    {
+        last = current;
+        current = current->next;
+    }
+    String toReturn = current->value;
+    delete current;
+    last->next = NULL;
+    return toReturn;
+}
 bool StreamMessage::parse(char *message)
 {
     // The message will be a null-terminated string
@@ -84,16 +106,18 @@ bool StreamMessage::parse(char *message)
         current->next = newMessageNode;
     }
 }
-StreamMessage::~StreamMessage(){
-    while(this->oldestInboundMessage)
+StreamMessage::~StreamMessage()
+{
+    while (this->oldestInboundMessage)
         this->readMessage();
-    while(this->oldestOutboundMessage){
-
-    while (this->oldestOutboundMessage != NULL)
+    while (this->oldestOutboundMessage)
     {
-        MessageNode *toDelete = this->oldestOutboundMessage;
-        this->oldestOutboundMessage = this->oldestOutboundMessage->next;
-        delete toDelete;
-    }
+
+        while (this->oldestOutboundMessage != NULL)
+        {
+            MessageNode *toDelete = this->oldestOutboundMessage;
+            this->oldestOutboundMessage = this->oldestOutboundMessage->next;
+            delete toDelete;
+        }
     }
 }
