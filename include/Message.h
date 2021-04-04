@@ -10,9 +10,9 @@ public:
     SensorValue *value;
     // id must be >1
     Message(SensorValue *value, uint8_t id);
-    void send(Stream *medium);
+    virtual void send(Stream *medium);
     //parses the message and return if it was successful
-    bool parse(char *toParse);
+    virtual bool parse(char *toParse);
     void sendDescription(Stream* medium);
 };
 #endif

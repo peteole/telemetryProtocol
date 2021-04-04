@@ -69,10 +69,17 @@ public:
     FloatSensorValue(String name) : BasicSensorValueTemplate("float", name) {}
 };
 
-class StringSensorValue : public BasicSensorValueTemplate<String>
+class StringSensorValue : public SensorValue
 {
 public:
-    StringSensorValue(String name) : BasicSensorValueTemplate("string", name) {}
+    StringSensorValue(String name, int maxSize);
+    String toJSON();
+    char *getMessage();
+    void parse(char *message);
+    String value;
+
+private:
+    String name;
 };
 
 #endif

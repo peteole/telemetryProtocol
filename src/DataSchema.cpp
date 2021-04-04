@@ -51,17 +51,29 @@ SensorValueList::SensorValueList(SensorValue **sensorvalues, uint16_t length, St
     this->messageBuffer = new char[this->size];
 }
 
-// template <typename t, const char *type>
-// BasicSensorValueTemplate<t, type>::BasicSensorValueTemplate(String name)
-// {
-//     this->type = String(type);
-//     this->size = sizeof(t);
-//     this->messageBuffer = new char[this->size];
-//     this->name = name;
-// }
-
-// template <typename t, const char *type>
-// char *BasicSensorValueTemplate<t, type>::getMessage()
-// {
-//     return reinterpret_cast<char *>(&(this->value));
-// }
+StringSensorValue::StringSensorValue(String name, int maxSize)
+{
+    this->size = maxSize;
+    this->name = name;
+}
+void StringSensorValue::parse(char *message)
+{
+    this->value = String(message);
+    if (this->value.length() > this->size)
+    {
+        // message too long
+        this->value = "";
+    }
+}
+char *StringSensorValue::getMessage()
+{
+    if (this->value.length() > this->size)
+    {
+        this->value = "";
+    }
+    return this->value.begin();
+}
+String StringSensorValue::toJSON()
+{
+    return "{\"name\": " + this->name + ", \"size\":" + this->size + ",\"type\": \"string\"}";
+}
