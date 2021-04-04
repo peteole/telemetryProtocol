@@ -78,3 +78,11 @@ void MessageRegistry::sendDataSchema(Stream *stream)
         this->messages[i]->sendDescription(stream);
     }
 }
+MessageRegistry::MessageRegistry() : stream(new StreamMessage(254))
+{
+}
+MessageRegistry::~MessageRegistry()
+{
+    while(this)
+    delete this->stream;
+}
