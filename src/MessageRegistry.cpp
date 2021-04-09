@@ -26,6 +26,7 @@ void MessageRegistry::readDataInStream(Stream *toRead)
                     currentMessage->parse(this->buffer);
                     currentMessage = NULL;
                 }
+                this->currentPosition = 0;
             }
             else
             {
@@ -45,6 +46,7 @@ void MessageRegistry::readDataInStream(Stream *toRead)
                             break;
                         }
                     }
+                    this->currentPosition = 0;
                 }
             }
             previousByteZero = false;
