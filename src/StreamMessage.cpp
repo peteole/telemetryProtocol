@@ -76,6 +76,7 @@ String StreamMessage::readMessage()
     {
         String toReturn = this->oldestInboundMessage->value;
         delete this->oldestInboundMessage;
+        this->oldestInboundMessage=NULL;
         return toReturn;
     }
     MessageNode *last = this->oldestInboundMessage;
