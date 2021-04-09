@@ -93,6 +93,7 @@ void MessageRegistry::sendDataSchema(Stream *stream)
 }
 MessageRegistry::MessageRegistry() : stream(new StreamMessage(254))
 {
+    this->addMessage(this->stream);
 }
 MessageRegistry::~MessageRegistry()
 {
