@@ -105,6 +105,7 @@ bool StreamMessage::parse(char *message)
             current = current->next;
         current->next = newMessageNode;
     }
+    return true;
 }
 StreamMessage::~StreamMessage()
 {
