@@ -23,7 +23,7 @@ void Message::send(Stream *medium)
 }
 Message::Message(SensorValue *value, uint8_t id)
 {
-    while (id <= 1)
+    while (id <= 1 || id >= 255)
     {
         // id must be >2
     }

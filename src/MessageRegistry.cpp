@@ -1,6 +1,7 @@
 #include "MessageRegistry.h"
 void MessageRegistry::readDataInStream(Stream *toRead)
 {
+    bool mustSendMessageDefinitionMessage = false;
     while (toRead->available())
     {
         if (currentPosition >= maxMessageLength)
@@ -28,13 +29,21 @@ void MessageRegistry::readDataInStream(Stream *toRead)
             }
             else
             {
-                //start of new message
-                for (int i = 0; i < this->length; i++)
+                if (nextValue == 255)
                 {
-                    if (this->messages[i]->id == nextValue)
+                    // 255 is the message definition message id. If it is send, we need to send all message definitions
+                    mustSendMessageDefinitionMessage = true;
+                }
+                else
+                {
+                    //start of new message
+                    for (int i = 0; i < this->length; i++)
                     {
-                        this->currentMessage = messages[i];
-                        break;
+                        if (this->messages[i]->id == nextValue)
+                        {
+                            this->currentMessage = messages[i];
+                            break;
+                        }
                     }
                 }
             }
@@ -52,6 +61,10 @@ void MessageRegistry::readDataInStream(Stream *toRead)
                 this->currentPosition++;
             }
         }
+    }
+    if (mustSendMessageDefinitionMessage)
+    {
+        this->sendDataSchema(toRead);
     }
 }
 void MessageRegistry::addMessage(Message *toAdd)
@@ -83,6 +96,6 @@ MessageRegistry::MessageRegistry() : stream(new StreamMessage(254))
 }
 MessageRegistry::~MessageRegistry()
 {
-    while(this)
-    delete this->stream;
+    while (this)
+        delete this->stream;
 }
