@@ -61,21 +61,21 @@ template <typename intType>
 class IntSensorValueTemplate : public BasicSensorValueTemplate<intType>
 {
 public:
-    IntSensorValueTemplate(String name) : BasicSensorValueTemplate("int", name) {}
+    IntSensorValueTemplate(String name) : BasicSensorValueTemplate<intType>("int", name) {}
 };
 
 template <typename uintType>
 class UIntSensorValueTemplate : public BasicSensorValueTemplate<uintType>
 {
 public:
-    UIntSensorValueTemplate(String name) : BasicSensorValueTemplate("uint", name) {}
+    UIntSensorValueTemplate(String name) : BasicSensorValueTemplate<uintType>("uint", name) {}
 };
 
 template <typename floatType>
 class FloatSensorValueTemplate : public BasicSensorValueTemplate<floatType>
 {
 public:
-    FloatSensorValueTemplate(String name) : BasicSensorValueTemplate("float", name) {}
+    FloatSensorValueTemplate(String name) : BasicSensorValueTemplate<floatType>("float", name) {}
 };
 typedef IntSensorValueTemplate<int> IntSensorValue;
 typedef IntSensorValueTemplate<int32_t> Int32SensorValue;
