@@ -57,17 +57,38 @@ public:
     }
 };
 
-class IntSensorValue : public BasicSensorValueTemplate<int>
+template <typename intType>
+class IntSensorValueTemplate : public BasicSensorValueTemplate<intType>
 {
 public:
-    IntSensorValue(String name) : BasicSensorValueTemplate("int", name) {}
+    IntSensorValueTemplate(String name) : BasicSensorValueTemplate("int", name) {}
 };
 
-class FloatSensorValue : public BasicSensorValueTemplate<float>
+template <typename uintType>
+class UIntSensorValueTemplate : public BasicSensorValueTemplate<uintType>
 {
 public:
-    FloatSensorValue(String name) : BasicSensorValueTemplate("float", name) {}
+    UIntSensorValueTemplate(String name) : BasicSensorValueTemplate("uint", name) {}
 };
+
+template <typename floatType>
+class FloatSensorValueTemplate : public BasicSensorValueTemplate<floatType>
+{
+public:
+    FloatSensorValueTemplate(String name) : BasicSensorValueTemplate("float", name) {}
+};
+typedef IntSensorValueTemplate<int> IntSensorValue;
+typedef IntSensorValueTemplate<int32_t> Int32SensorValue;
+typedef IntSensorValueTemplate<int16_t> Int16SensorValue;
+typedef IntSensorValueTemplate<int8_t> Int8SensorValue;
+
+typedef UIntSensorValueTemplate<uint> UIntSensorValue;
+typedef UIntSensorValueTemplate<uint32_t> UInt32SensorValue;
+typedef UIntSensorValueTemplate<uint16_t> UInt16SensorValue;
+typedef UIntSensorValueTemplate<uint8_t> UInt8SensorValue;
+
+typedef FloatSensorValueTemplate<float> FloatSensorValue;
+typedef FloatSensorValueTemplate<double_t> DoubleSensorValue;
 
 class StringSensorValue : public SensorValue
 {
