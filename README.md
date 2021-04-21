@@ -14,6 +14,9 @@ To do so, the following classes are used:
 - Message: A message has a single sensorvalue (which may be a list sensorvalue) and is able to encode and send that sensorvalue over a medium. It can parse an encoded incoming new value for that sensorvalue as well. A message has a unique id which is used to identify which type of message is incoming when new pieces of data arrive. When sending a message, the sensorvalue is encoded. However, a start and end byte as well as the idea must be injected into the message.
 - MessageRegistry: This class handles all the messages involved in a program. You can feed it input data and it will decide which of the messages it handles must consume the input.
 
+## String messages
+
+For convenience each registry is initialized with a special message called its "stream". It is a special type of message which can send string messages like the arduino Serial object.
 ## Example
 
 ``` C++
@@ -63,3 +66,8 @@ void loop()
     }
 }
 ```
+
+## Client
+
+The other side must be able to parse and send messages. This must currently be done using the javascript/typescript client:
+https://github.com/peteole/telemetryProtocolClient
